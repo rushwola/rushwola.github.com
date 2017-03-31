@@ -9,5 +9,5 @@ wget http://nginx.org/download/nginx-1.11.12.tar.gz
 yum -y install gcc pcre pcre-devel zlib zlib-devel openssl openssl-devel
 
 # 配置Nginx安装选项
-
-./configure --prefix=/opt/nginx --sbin-path=/usr/bin/nginx
+这查额外安装了ssh模块
+./configure --prefix=/opt/nginx --sbin-path=/usr/bin/nginx  --with-http_ssl_module
