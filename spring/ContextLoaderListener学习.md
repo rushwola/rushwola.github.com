@@ -62,3 +62,16 @@ DispatcherServlet也可以配置自己的初始化参数，覆盖默认配置：
 
 
 如下:
+<servlet>
+        <servlet-name>demo</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>classpath:spring-servlet-config.xml</param-value>
+        </init-param>
+</servlet>
+<servlet-mapping>
+        <servlet-name>demo</servlet-name>
+        <url-pattern>/</url-pattern>
+</servlet-mapping>
