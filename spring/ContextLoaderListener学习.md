@@ -79,3 +79,4 @@ DispatcherServlet也可以配置自己的初始化参数，覆盖默认配置：
 </servlet-mapping>
 ```
 ## Servlet上下文关系
+DispatcherServlet的上下文是通过配置servlet的contextConfigLocation来加载的，默认实现是XmlWebApplicationContext。
