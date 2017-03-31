@@ -11,3 +11,5 @@ yum -y install gcc pcre pcre-devel zlib zlib-devel openssl openssl-devel
 # 配置Nginx安装选项
 这查额外安装了ssh模块
 ./configure --prefix=/opt/nginx --sbin-path=/usr/bin/nginx  --with-http_ssl_module
+
+# 编译并安装
