@@ -92,3 +92,5 @@ DispatcherServlet的上下文是通过配置servlet的contextConfigLocation来�
 而后者则通过RequestContextUtils.getWebApplicationContext(request)或 WebApplicationContextUtils.getWebApplicationContext(servletContext,attrname)方法来获取对应的applicationContext。
 注：对于ContextLoaderListener加载的上下文，attrname即上面提到的WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE；而对于DispatcherServlet中的上下文则为FrameworkServlet.class.getName() + ".CONTEXT." + getServletName()
 
+## DispatcherServlet中使用的特殊的Bean
+
