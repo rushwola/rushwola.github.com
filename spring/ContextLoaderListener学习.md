@@ -154,3 +154,4 @@ DispatcherServlet的上下文是通过配置servlet的contextConfigLocation来�
 ``` stylus
     WebApplicationContext wac = ContextLoader.getCurrentWebApplicationContext();  
 ```
+这个很熟悉了吧，刚才提到了，当前应用的WebApplicationContext就保存在 ContextLoader的currentContextPerThread属性当中 
