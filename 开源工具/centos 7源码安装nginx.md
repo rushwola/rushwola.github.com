@@ -5,3 +5,4 @@ grammar_cjkRuby: true
 ---
 # 源码获取
 wget http://nginx.org/download/nginx-1.11.12.tar.gz
+# 检查安装依赖项
