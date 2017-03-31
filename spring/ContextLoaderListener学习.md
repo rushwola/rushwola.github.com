@@ -59,3 +59,6 @@ DispatcherServlet也可以配置自己的初始化参数，覆盖默认配置：
 | contextConfigLocation | 传给上下文实例（由contextClass指定）的字符串，用来指定上下文的位置。这个字符串可以被分成多个字符串（使用逗号作为分隔符） 来支持多个上下文（在多上下文的情况下，如果同一个bean被定义两次，后面一个优先）。
 默认为/WEB-INF/[server-name]-servlet.xml |
 | namespace             |                                                                                                                                                                                                                                                    |
+
+
+如下:
