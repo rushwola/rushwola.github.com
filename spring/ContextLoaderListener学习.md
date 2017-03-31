@@ -155,3 +155,23 @@ DispatcherServlet的上下文是通过配置servlet的contextConfigLocation来�
     WebApplicationContext wac = ContextLoader.getCurrentWebApplicationContext();  
 ```
 这个很熟悉了吧，刚才提到了，当前应用的WebApplicationContext就保存在 ContextLoader的currentContextPerThread属性当中 
+
+还有基于ServletContext上下文获取的方式
+
+``` stylus
+    ServletContext sc = request.getSession().getServletContext();  
+    ApplicationContext ac1 = WebApplicationContextUtils.getRequiredWebApplicationContext(sc);  
+    ApplicationContext ac2 = WebApplicationContextUtils.getWebApplicationContext(sc);  
+    WebApplicationContext wac1 = (WebApplicationContext) sc.getAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);  
+```
+还有一些更合适的，基于Spring提供的抽象类或者接口，在初始化Bean时注入ApplicationContext
+
+继承自抽象类ApplicationObjectSupport
+说明：抽象类ApplicationObjectSupport提供getApplicationContext()方法，可以方便的获取到ApplicationContext。
+Spring初始化时，会通过该抽象类的setApplicationContext(ApplicationContext context)方法将ApplicationContext 对象注入。
+
+继承自抽象类WebApplicationObjectSupport
+说明：类似上面方法，调用getWebApplicationContext()获取WebApplicationContext
+实现接口ApplicationContextAware
+说明：实现该接口的setApplicationContext(ApplicationContext context)方法，并保存ApplicationContext 对象。
+Spring初始化时，会通过该方法将ApplicationContext对象注入。
