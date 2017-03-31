@@ -13,3 +13,5 @@ yum -y install gcc pcre pcre-devel zlib zlib-devel openssl openssl-devel
 ./configure --prefix=/opt/nginx --sbin-path=/usr/bin/nginx  --with-http_ssl_module
 
 # 编译并安装
+
+# 启动,停止,重启
