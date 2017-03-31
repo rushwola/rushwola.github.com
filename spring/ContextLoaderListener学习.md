@@ -151,3 +151,6 @@ DispatcherServlet的上下文是通过配置servlet的contextConfigLocation来�
 否则都使用ApplicationContext，而WebApplicationContext就是其中的一种高级实现，它能提供很多有用的方法
 那么在应用程序如何获取 WebApplicationContext 呢，有多种方式，最简单的就是
 
+``` stylus
+    WebApplicationContext wac = ContextLoader.getCurrentWebApplicationContext();  
+```
