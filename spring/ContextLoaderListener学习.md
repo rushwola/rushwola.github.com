@@ -117,3 +117,35 @@ DispatcherServlet的上下文是通过配置servlet的contextConfigLocation来�
  
 
 通过以上的bean可以看出，一般LocalResover、ViewResolver等需要配置在/WEB-INF/[server-name]-servlet.xml文件中。
+
+## 最后
+说了一堆，跟Spring MVC 不配置ContextLoaderListener有什么关系呢。。。
+
+因为 ContextLoaderListener 本质上是创建了一个 WebApplicationContext ，所以你的项目里面，如果不使用 WebApplicationContext 就可以不配置该节点。
+
+那么只要做这种配置也是可以的：
+
+``` stylus
+    <!-- Spring MVC -->  
+        <servlet>  
+            <servlet-name>teach</servlet-name>  
+            <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>  
+            <init-param>  
+                <param-name>contextConfigLocation</param-name>  
+                <param-value>/WEB-INF/teach-servlet.xml</param-value>  
+            </init-param>  
+            <load-on-startup>1</load-on-startup>  
+        </servlet>  
+        <servlet-mapping>  
+            <servlet-name>teach</servlet-name>  
+            <url-pattern>*.action</url-pattern>  
+        </servlet-mapping>  
+```
+发现Spring MVC 所需的配置文件不使用context-param节点指定，直接在DispatcherServlet里面配置即可 
+注意：这种情况下，你的应用程序是无法使用WebApplicationContext的
+
+正常情况下，都会配置ContextLoaderListener，因为我们知道Spring IOC的两种实现
+
+基础的就是BeanFactory，高级的就是ApplicationContext，除非在资源非常有限的情况下，才使用BeanFactory
+
+否则都使用ApplicationContext，而WebApplicationContext就是其中的一种高级实现，它能提供很多有用的方法
