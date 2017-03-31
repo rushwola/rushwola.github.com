@@ -62,6 +62,8 @@ DispatcherServlet也可以配置自己的初始化参数，覆盖默认配置：
 
 
 如下:
+
+``` stylus
 <servlet>
         <servlet-name>demo</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -75,3 +77,4 @@ DispatcherServlet也可以配置自己的初始化参数，覆盖默认配置：
         <servlet-name>demo</servlet-name>
         <url-pattern>/</url-pattern>
 </servlet-mapping>
+```
