@@ -85,7 +85,7 @@ DispatcherServlet的上下文是通过配置servlet的contextConfigLocation来�
 
 因此在/WEB-INF/[server-name]-servlet.xml中配置的Bean一般只针对Spring MVC有效，而在ContextLoaderListener配置文件下配置的bean则对整个spring有效。
 
-DispatcherServlet上下文创建完后会放在ServletContext对象中，
+上下文创建完后会放在ServletContext对象中，
 其中ContextLoaderListener加载的上下文放在ServletContext的key为WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE属性中，
 而DispatcherServlet加载的上下文在每次请求时会放一份在request对象的key为WEB_APPLICATION_CONTEXT_ATTRIBUTE属性中。
 因而两者的获取方式也不一样，前者可以通过WebApplicationContextUtils.getRequiredWebApplicationContext(servletContext)或WebApplicationContextUtils.getWebApplicationContext(servletContext)或WebApplicationContextUtils.getWebApplicationContext(servletContext,attrname)方法来获取对应的applicationContext，
