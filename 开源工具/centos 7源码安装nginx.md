@@ -4,4 +4,4 @@ tags: centos 源码安装 nginx
 grammar_cjkRuby: true
 ---
 # 源码获取
-wget 
+wget http://nginx.org/download/nginx-1.11.12.tar.gz
