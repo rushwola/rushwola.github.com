@@ -83,3 +83,4 @@ DispatcherServlet的上下文是通过配置servlet的contextConfigLocation来�
 
 值得注意的是DispatcherServlet的上下文仅仅是Spring MVC的上下文，而Spring加载的上下文是通过ContextLoaderListener来加载的。一般spring web项目中同时会使用这两种上下文，前者仅负责MVC相关bean的配置管理（如ViewResolver、Controller、MultipartResolver等），后者则负责整个spring相关bean的配置管理（如相关Service、DAO等）。
 
+因此在/WEB-INF/[server-name]-servlet.xml中配置的Bean一般只针对Spring MVC有效，而在ContextLoaderListener配置文件下配置的bean则对整个spring有效。
