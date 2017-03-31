@@ -52,3 +52,10 @@ DispatcherServlet主要用作职责调度工作，本身主要用于控制流程
 
 DispatcherServlet默认使用WebApplicationContext作为上下文，Spring默认配置文件为“/WEB-INF/[servlet名字]-servlet.xml”
 DispatcherServlet也可以配置自己的初始化参数，覆盖默认配置：
+
+| 参数                  | 描述                                                                                                                                                                                                                                               |
+| --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| contextClass          | 实现WebApplicationContext接口的类，当前的servlet用它来创建上下文。如果这个参数没有指定， 默认使用XmlWebApplicationContext。                                                                                                                        |
+| contextConfigLocation | 传给上下文实例（由contextClass指定）的字符串，用来指定上下文的位置。这个字符串可以被分成多个字符串（使用逗号作为分隔符） 来支持多个上下文（在多上下文的情况下，如果同一个bean被定义两次，后面一个优先）。
+默认为/WEB-INF/[server-name]-servlet.xml |
+| namespace             |                                                                                                                                                                                                                                                    |
