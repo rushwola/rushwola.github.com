@@ -22,5 +22,11 @@ attributeRemoved(ServletContextAttributeEvent event)：当把一个属性从appl
 attributeReplaced(ServletContextAttributeEvent event)：当程序替换application范围内的属性时将触发该方法，可通过形参event.getName和event.getValue获取替换后的属性名和属性值
  
  
- 3. 
+ 3. ServletRequestListener：监听用户请求
+ 包含方法：
+requestInitialized(ServletRequestEvent sre)：用户请求到达、被初始化时触发该方法，可通过形参sre.getServletRequest()获取request
+requestDestroyed(ServletRequestEvent sre)：用户请求结束、被销毁时触发该方法
+ 
+ 
+ 4. 
 
