@@ -28,5 +28,12 @@ requestInitialized(ServletRequestEvent sre)：用户请求到达、被初始化�
 requestDestroyed(ServletRequestEvent sre)：用户请求结束、被销毁时触发该方法
  
  
- 4. 
+ 4. ServletRequestAttributeListener：监听ServletRequest范围(request)内属性的改变
+ 
+ 5. HttpSessionListener：监听用户session的开始和结束
+ 包含方法：
+sessionCreated(HttpSessionEvent se)：用户与服务器的会话开始、创建时触发该方法，通过形参se.getSession()获取session，
+sessionDestroyed(HttpSessionEvent se)：用户与服务器的会话断开、销毁时触发该方法
+
+ 6. HttpSessionAttributeListener：监听HttpSession范围(session)内属性的改变
 
