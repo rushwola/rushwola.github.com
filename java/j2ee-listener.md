@@ -9,6 +9,18 @@ grammar_cjkRuby: true
 # 常用的Web事件监听器接口
 
  1. ServletContextListener
+ 监听Web应用的启动和关闭
+ 包含的方法：
+ contextInitialized(ServletContextEvent sce)  启动Web应用时系统调用Listener的该方法,可通过ServletContextEvent取得该应用的ServletContext实例（sce.getServletContext())
+ 
+ contextDestroyed(ServletContextEvent sce)：关闭Web应用时系统调用Listener的该方法
+ 
+ 2. ServletContextAttributeListener：监听ServletContext范围(application)内属性的改变
+ 包含的方法：
+attributeAdded(ServletContextAttributeEvent event)：当把一个属性存入application范围时触发该方法，可通过形参event.getName和event.getValue获取添加的属性名和属性值
+attributeRemoved(ServletContextAttributeEvent event)：当把一个属性从application范围删除时将触发该方法，可通过形参event.getName和event.getValue获取删除的属性名和属性值
+attributeReplaced(ServletContextAttributeEvent event)：当程序替换application范围内的属性时将触发该方法，可通过形参event.getName和event.getValue获取替换后的属性名和属性值
  
  
- 2. 
+ 3. 
+
