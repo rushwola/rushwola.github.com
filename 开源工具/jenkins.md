@@ -14,3 +14,7 @@ grammar_cjkRuby: true
  
  # 安装插件
  
+    Maven插件 Maven Integration plugin
+    发布插件 Deploy to container Plugin
+    git插件 Git plugin
+    svn插件 Subversion Plug-in
