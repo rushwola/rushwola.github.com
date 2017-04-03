@@ -18,3 +18,6 @@ grammar_cjkRuby: true
     发布插件 Deploy to container Plugin
     git插件 Git plugin
     svn插件 Subversion Plug-in
+	
+# 配置环境
+
