@@ -11,3 +11,6 @@ grammar_cjkRuby: true
  
  - 运行
  将war包放到tomcat的　webapps下，运行tomcat即可。
+ 
+ # 安装插件
+ 
