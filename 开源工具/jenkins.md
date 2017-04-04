@@ -20,6 +20,7 @@ grammar_cjkRuby: true
     svn插件 Subversion Plug-in
 	SSH插件 Publish Over SSH
 	邮件插件 Email Extension Plugin 
+	多项目构建插件:Multijob plugin
 	
 # 配置环境
 ![enter description here][1]
