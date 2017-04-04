@@ -20,8 +20,8 @@ grammar_cjkRuby: true
     svn插件 Subversion Plug-in
 	
 # 配置环境
-
-
+![enter description here][1]
+如图选择系统管理->Global Tool Configuration  配置git,jdk,maven
 
 # 遇到的问题
 
@@ -116,3 +116,6 @@ ssh-rsa AAAAB3NzaC1yc2。。。。。。。。。
  keys直接添加到github账户设置里边的SSH keys
 
 最后再执行git clone命令就可以了
+
+
+  [1]: ./images/1491271450230.jpg "1491271450230.jpg"
