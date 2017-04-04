@@ -25,6 +25,8 @@ grammar_cjkRuby: true
 ![enter description here][1]
 如图选择系统管理->Global Tool Configuration  配置git,jdk,maven
 
+#多项目构建
+
 # 遇到的问题
 
 解决方法如下：
