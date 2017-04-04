@@ -26,7 +26,7 @@ grammar_cjkRuby: true
 如图选择系统管理->Global Tool Configuration  配置git,jdk,maven
 
 # 多项目构建
-
+[enter description here][2]
 
 # 遇到的问题
 
@@ -124,3 +124,4 @@ ssh-rsa AAAAB3NzaC1yc2。。。。。。。。。
 
 
   [1]: ./images/1491271450230.jpg "1491271450230.jpg"
+  [2]: http://www.cnblogs.com/gossip/p/5961376.html
