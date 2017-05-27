@@ -11,6 +11,7 @@ Eclipse中maven从远程仓库中下载jar包有时会很慢，有些甚至进�
 1.找到我们的本地maven仓库目录 我的是 H:\Java\maven\Repository
 
 2.搜索出该目录下的*lastUpdated.properties文件并删除，如下图所示，可以通过模糊搜索匹配出这样的文件
+3.搜索出该目录下的*.lastUpdated文件并删除
 
 
 
