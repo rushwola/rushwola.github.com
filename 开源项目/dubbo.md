@@ -11,3 +11,6 @@ http://dubbo.io/Download-zh.htms
 1. 获取源码
 https://github.com/alibaba/dubbo
 
+2. 编译源码
+
+
