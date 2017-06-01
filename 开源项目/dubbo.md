@@ -17,3 +17,9 @@ https://github.com/alibaba/dubbo
 2. 编译源码
 下载源码,导入eclipse,运行:mvn clean install -Dmaven.test.skip
 
+3. 注册中心
+用zookeeper当注册中心
+
+4. 监控中心
+用dubbo-monitor-simple当监控中心.
+
