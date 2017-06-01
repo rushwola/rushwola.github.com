@@ -12,5 +12,5 @@ http://dubbo.io/Download-zh.htms
 https://github.com/alibaba/dubbo
 
 2. 编译源码
-
+下载源码,导入eclipse,运行:mvn clean install -Dmaven.test.skip
 
