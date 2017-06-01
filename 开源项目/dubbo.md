@@ -8,6 +8,10 @@ grammar_cjkRuby: true
 官方资源文档地址:
 http://dubbo.io/Download-zh.htms
 
+# 环境依赖
+
+
+
 1. 获取源码
 https://github.com/alibaba/dubbo
 
