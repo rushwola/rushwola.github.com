@@ -67,3 +67,13 @@ $i
 $iAmVariable
 ```
 输出结果如下：
+
+``` stylus
+Welcome velocity to velocity.com
+today is Sun Mar 23 19:19:04 CST 2014.
+1
+2
+good!
+```
+
+
