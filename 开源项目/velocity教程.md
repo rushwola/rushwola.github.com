@@ -184,6 +184,13 @@ parse.vm：
 #parse(“foo.vm”)
 ```
 
+输出结果为：velocity
+include.vm：
+
+``` stylus
+#include(“foo.vm”)
+```
+
 
 
 
