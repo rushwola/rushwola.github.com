@@ -142,6 +142,12 @@ Velocity 引擎会将 list 中的值循环赋给 element 变量，同时会创�
 
 Velocity 引擎提供了 AND、OR 和 NOT 操作符，分别对应&&、||和! 例如：
 
+``` stylus
+#if($foo && $bar)
+#end
+```
+
+
 
 
 
