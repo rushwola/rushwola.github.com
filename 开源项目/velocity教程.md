@@ -76,4 +76,6 @@ today is Sun Mar 23 19:19:04 CST 2014.
 good!
 ```
 
+在输出结果中我们可以看到，$name、$date 都被替换成了在 HelloVelocity.java 里面定义的变量，在 foreach 语句里面遍历了 list 的每一个元素，并打印出来。而$iAmVariable 则是在页面中使用 #set 定义的变量。
 
+基本模板语言语法使用
