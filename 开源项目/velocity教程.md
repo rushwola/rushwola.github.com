@@ -146,7 +146,9 @@ Velocity 引擎提供了 AND、OR 和 NOT 操作符，分别对应&&、||和! �
 #if($foo && $bar)
 #end
 ```
+五、宏
 
+Velocity 中的宏可以理解为函数定义。定义的语法如下：
 
 
 
