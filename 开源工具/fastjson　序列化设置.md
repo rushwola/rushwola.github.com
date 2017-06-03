@@ -1,3 +1,10 @@
+---
+title: fastjson　序列化设置
+tags: 新建,模板,小书匠
+grammar_cjkRuby: true
+---
+
+
   <!-- 输出key时是否使用双引号 -->
            <value>QuoteFieldNames</value>
            <!-- 是否输出值为null的字段 -->
