@@ -66,3 +66,4 @@ $i
 #end
 $iAmVariable
 ```
+输出结果如下：
