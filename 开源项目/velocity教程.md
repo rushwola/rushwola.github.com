@@ -113,7 +113,9 @@ good!
 #set($foo = [“foo”,$bar])
 ```
 
+二、循环
 
+在 Velocity 中循环语句的语法结构如下：
 
 
 
