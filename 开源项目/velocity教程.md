@@ -21,3 +21,35 @@ Velocity 是一个基于 Java 的模板引擎框架，提供的模板语言可�
 2. 源代码生成：Velocity 可以被用来生成 Java 代码、SQL 或者 PostScript。有很多开源和商业开发的软件是使用 Velocity 来开发的。
 3. 自动 Email：很多软件的用户注册、密码提醒或者报表都是使用 Velocity 来自动生成的。使用 Velocity 可以在文本文件里面生成邮件内容，而不是在 Java 代码中拼接字符串。
 4. 转换 xml：Velocity 提供一个叫 Anakia 的 ant 任务，可以读取 XML 文件并让它能够被 Velocity 模板读取。一个比较普遍的应用是将 xdoc 文档转换成带样式的 HTML 文件。
+和学习所有新的语言或者框架的顺序一样，我们从 Hello Velocity 开始学习。首先在 Velocity 的官网上下载最新的发布包，之后使用 Eclipse 建立普通的 Java 项目。引入解压包中的 velocity-1.7.jar 和 lib 文件夹下面的 jar 包。这样我们就可以在项目中使用 Velocity 了。
+
+在做完上面的准备工作之后，就可以新建一个叫 HelloVelocity 的类，代码如下：
+
+``` stylus
+public class HelloVelocity {
+ public static void main(String[] args) {
+ VelocityEngine ve = new VelocityEngine();
+ ve.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
+ ve.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
+  
+ ve.init();
+  
+ Template t = ve.getTemplate("hellovelocity.vm");
+ VelocityContext ctx = new VelocityContext();
+  
+ ctx.put("name", "velocity");
+ ctx.put("date", (new Date()).toString());
+  
+ List temp = new ArrayList();
+ temp.add("1");
+ temp.add("2");
+ ctx.put("list", temp);
+  
+ StringWriter sw = new StringWriter();
+  
+ t.merge(ctx, sw);
+  
+ System.out.println(sw.toString());
+ }
+}
+```
