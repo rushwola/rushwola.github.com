@@ -95,6 +95,10 @@ good!
 #set($hello =“hello $name”)
 ```
 上面的这个等式将会给$hello 赋值为“hello velocity”
+2. 变量的使用
 
+在模板文件中使用$name 或者${name} 来使用定义的变量。推荐使用${name} 这种格式，因为在模板中同时可能定义了类似$name 和$names 的两个变量，如果不选用大括号的话，引擎就没有办法正确识别$names 这个变量。
+
+对于一个复杂对象类型的变量，例如$person，可以使用${person.name} 来访问 person 的 name 属性。值得注意的是，这里的${person.name} 并不是直接访问 person 的 name 属性，而是访问 person 的 getName() 方法，所以${person.name} 和${person.getName()} 是一样的。
 
 
