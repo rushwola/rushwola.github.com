@@ -169,7 +169,7 @@ hello $name
 #sayHello(“velocity”)
 ```
 
-
+输出的结果为 hello velocity
 
 
 
