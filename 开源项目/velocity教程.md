@@ -94,6 +94,7 @@ good!
 ``` stylus
 #set($hello =“hello $name”)
 ```
+上面的这个等式将会给$hello 赋值为“hello velocity”
 
 
 
