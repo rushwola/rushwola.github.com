@@ -56,3 +56,13 @@ public class HelloVelocity {
 在 HelloVelocity 的代码中，首先 new 了一个 VelocityEngine 类，这个类设置了 Velocity 使用的一些配置，在初始化引擎之后就可以读取 hellovelocity.vm 这个模板生成的 Template 这个类。之后的 VelocityContext 类是配置 Velocity 模板读取的内容。这个 context 可以存入任意类型的对象或者变量，让 template 来读取。这个操作就像是在使用 JSP 开发时，往 request 里面放入 key-value，让 JSP 读取一样。
 
 接下来就是写 hellovelocity.vm 文件了，这个文件实际定义了 Velocity 的输出内容和格式。hellovelocity.vm 的内容如下：
+
+``` stylus
+#set( $iAmVariable = "good!" )
+Welcome $name to velocity.com
+today is $date.
+#foreach ($i in $list)
+$i
+#end
+$iAmVariable
+```
