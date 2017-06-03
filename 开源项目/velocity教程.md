@@ -129,6 +129,16 @@ Velocity 引擎会将 list 中的值循环赋给 element 变量，同时会创�
 
 条件语句的语法如下
 
+``` stylus
+#if(condition)
+...
+#elseif(condition)
+…
+#else
+…
+#end
+```
+
 
 
 
