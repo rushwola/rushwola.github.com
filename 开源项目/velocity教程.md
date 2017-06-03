@@ -104,4 +104,14 @@ good!
 
 在第一小点中，定义了一个变量，同时给这个变量赋了值。对于 Velocity 来说，变量是弱数据类型的，可以在赋了一个 String 给变量之后再赋一个数字或者数组给它。可以将以下六种数据类型赋给一个 Velocity 变量：变量引用, 字面字符串, 属性引用, 方法引用, 字面数字, 数组列表。
 
+``` stylus
+#set($foo = $bar)
+#set($foo =“hello”)
+#set($foo.name = $bar.name)
+#set($foo.name = $bar.getName($arg))
+#set($foo = 123)
+#set($foo = [“foo”,$bar])
+```
+
+
 
