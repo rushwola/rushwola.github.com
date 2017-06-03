@@ -162,6 +162,16 @@ Velocity 中的宏可以理解为函数定义。定义的语法如下：
 ```
 这里的参数之间使用空格隔开，下面是定义和使用 Velocity 宏的例子：
 
+``` stylus
+#macro(sayHello $name)
+hello $name
+#end
+#sayHello(“velocity”)
+```
+
+
+
+
 
 
 
