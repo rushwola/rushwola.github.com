@@ -206,4 +206,6 @@ include.vm：
 
   [1]: ./images/1496482769745.jpg "1496482769745.jpg"
   
-  
+  Java Resource 中放的是 Java 源码以及资源文件，Deployed Resources 中放的是 web 相关的文件。在 Java 文件中使用了类似 Spring 的 @Component 和 @Autowired 的注解来实现 IoC，使用 @Action 这样的注解实现 MVC，而在 JSP 中则使用了 JSTL 来输出页面。在上图所示的目录中，annotation、filter、framework 和 util 这四个 package 是作为这个项目框架的，跟业务没有关系，类似于 spring 和 struts 的功能。
+
+在实际的项目中我们当然希望能够一开始就编写一个通用的模板文件，然后一下子生成所有的代码，但是很多时候这样做是不可能的，或者说比较困难。为了解决这个问题，我们可以在编写 Velocity 模板文件之前先按照原本的流程编写代码，暂时先忘掉 Velocity。编写的代码应该能够在一个功能上完整的调通涉及 MVC 中所有层次的内容。在这个例子中，先编写好 StudentAction.java 文件，以及上图中 webapp 目录中所示的文件。在写好以上代码，同时也能顺利运行之后，我们可以参照之前编写的代码来写模板文件。这里我们来分别看一个 Java 文件和 JSP 的例子。
