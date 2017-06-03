@@ -190,7 +190,9 @@ include.vm：
 ``` stylus
 #include(“foo.vm”)
 ```
+输出结果为：#set($name =“velocity”)
 
+以上内容包含了部分 Velocity 的语法，详细的语法内容可以参考 Velocity 的官方文档。
 
 
 
