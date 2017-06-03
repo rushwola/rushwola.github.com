@@ -81,3 +81,19 @@ good!
 基本模板语言语法使用
 
 在 hellovelocity.vm 里面可以看到很多以 # 和$符开头的内容，这些都是 Velocity 的语法。在 Velocity 中所有的关键字都是以 # 开头的，而所有的变量则是以$开头。Velocity 的语法类似于 JSP 中的 JSTL，甚至可以定义类似于函数的宏，下面来看看具体的语法规则。
+一、变量
+
+和我们所熟知的其他编程语言一样，Velocity 也可以在模板文件中有变量的概念。
+1. 变量定义
+
+``` stylus
+#set($name =“velocity”)
+```
+等号后面的字符串 Velocity 引擎将重新解析，例如出现以$开始的字符串时，将做变量的替换。
+
+``` stylus
+#set($hello =“hello $name”)
+```
+
+
+
