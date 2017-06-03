@@ -117,5 +117,15 @@ good!
 
 在 Velocity 中循环语句的语法结构如下：
 
+``` stylus
+#foreach($element in $list)
+ This is $element
+ $velocityCount
+#end
+```
+
+
+
+
 
 
