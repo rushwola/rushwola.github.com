@@ -125,6 +125,9 @@ good!
 ```
 
 Velocity 引擎会将 list 中的值循环赋给 element 变量，同时会创建一个$velocityCount 的变量作为计数，从 1 开始，每次循环都会加 1.
+三、条件语句
+
+条件语句的语法如下
 
 
 
