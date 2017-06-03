@@ -173,6 +173,21 @@ hello $name
 六、#parse 和 #include
 #parse 和 #include 指令的功能都是在外部引用文件，而两者的区别是，#parse 会将引用的内容当成类似于源码文件，会将内容在引入的地方进行解析，#include 是将引入文件当成资源文件，会将引入内容原封不动地以文本输出。分别看以下例子：
 
+foo.vm 文件：
+
+``` stylus
+#set($name =“velocity”)
+```
+parse.vm：
+
+``` stylus
+#parse(“foo.vm”)
+```
+
+
+
+
+
 
 
 
