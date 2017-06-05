@@ -8,5 +8,3 @@ grammar_cjkRuby: true
 https://yq.aliyun.com/articles/69705
 
 http://mbg.cndocs.tk/
-
-mybatis generator可以自动生成相应的mybatis dao代码。
