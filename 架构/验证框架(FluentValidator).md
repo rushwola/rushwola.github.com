@@ -85,3 +85,14 @@ FluentValidator就是这么一个工具类库，适用于以Java语言开发的�
     <version>1.0.5</version>
 </dependency>
 ```
+上面这个FluentValidator是个基础核心包，只依赖于slf4j和log4j，如果你使用logback，想去掉log4j，排除掉的方法如下所示：
+<dependency>
+    <groupId>com.baidu.unbiz</groupId>
+    <artifactId>fluent-validator</artifactId>
+    <exclusions>
+        <exclusion>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+        </exclusion>
+    </exclusions>
+</dependency>
