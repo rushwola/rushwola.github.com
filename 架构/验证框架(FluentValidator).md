@@ -118,3 +118,44 @@ public class Car {
 5.3 开发一个专职的Validator
 
 实际这里需要开发三个Validator，分别对Car的3个属性进行校验，这里以座椅数为例展示如何开发一个Validator，其他两个省略。
+
+``` stylus
+public class CarSeatCountValidator extends ValidatorHandler<Integer> implements Validator<Integer> {
+
+    @Override
+    public boolean validate(ValidatorContext context, Integer t) {
+        if (t < 2) {
+            context.addErrorMsg(String.format("Seat count is not valid, invalid value=%s", t));
+            return false;
+        }
+        return true;
+    }
+}
+```
+很简单，实现Validator接口，泛型T规范这个校验器待验证的对象的类型，继承ValidatorHandler可以避免实现一些默认的方法，例如accept()，后面会提到，validate()方法第一个参数是整个校验过程的上下文，第二个参数是待验证对象，也就是座椅数。
+
+验证逻辑很简单，座椅数必须大于1，否则通过context放入错误消息并且返回false，成功返回true。
+
+5.4 开始验证吧
+
+二话不说，直接上代码：
+
+``` stylus
+Car car = getCar();
+
+Result ret = FluentValidator.checkAll()
+                            .on(car.getLicensePlate(), new CarLicensePlateValidator())
+                            .on(car.getManufacturer(), new CarManufacturerValidator())
+                            .on(car.getSeatCount(), new CarSeatCountValidator())
+                            .doValidate()
+                            .result(toSimple());
+
+System.out.println(ret);
+```
+我想不用多说，如果你会英文，你就能知道这段代码是如何工作的。这就是流式风格（Fluent Interface）调用的优雅之处，让代码更可读、更好理解。
+
+还是稍微说明下，首先我们通过FluentValidator.checkAll()获取了一个FluentValidator实例，紧接着调用了failFast()表示有错了立即返回，它的反义词是failOver，然后，一连串on()操作表示在Car的3个属性上依次使用3个校验器进行校验（这个过程叫做applying constraints），截止到此，真正的校验还并没有做，这就是所谓的“惰性求值（Lazy valuation）”，有点像Java8 Stream API中的filter()、map()方法，直到doValidate()验证才真正执行了，最后我们需要收殓出来一个结果供caller获取打印，直接使用默认提供的静态方法toSimple()来做一个回调函数传入result()方法，最终返回Result类，如果座椅数不合法，那么控制台打印结果如下：
+
+``` stylus
+Result{isSuccess=false, errors=[Seat count is not valid, invalid value=99]}
+```
