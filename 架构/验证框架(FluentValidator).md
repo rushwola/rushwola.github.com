@@ -99,3 +99,19 @@ FluentValidator就是这么一个工具类库，适用于以Java语言开发的�
     </exclusions>
 </dependency>
 ```
+5.2 开发业务领域模型
+
+从广义角度来说DTO（Data Transfer Object）、VO（Value Object）、BO（Business Object）、POJO等都可以看做是业务表达模型。
+
+我们这里创建一个汽车类（Car）的POJO，里面定义了牌照（license plate）、座椅数（seat count）、生产商（manufacturer）。
+
+``` stylus
+public class Car {
+    private String manufacturer;
+    private String licensePlate;
+    private int seatCount;
+
+    // getter and setter...
+}
+```
+
