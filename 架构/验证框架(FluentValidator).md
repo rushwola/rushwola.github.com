@@ -159,3 +159,7 @@ System.out.println(ret);
 ``` stylus
 Result{isSuccess=false, errors=[Seat count is not valid, invalid value=99]}
 ```
+6 深入实践
+6.1 Validator详解
+
+Validator接口定义如下：
