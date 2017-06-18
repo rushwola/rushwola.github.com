@@ -72,3 +72,8 @@ FluentValidator就是这么一个工具类库，适用于以Java语言开发的�
 4 哪里可以获取到FluentValidator
 
 项目托管在github上，地址点此https://github.com/neoremind/fluent-validator。说明文档全英完成，i18n化，同时使用Apache2 License开源
+
+5 上手
+5.1 maven引入依赖
+
+添加如下依赖到maven的pom.xml文件中：
