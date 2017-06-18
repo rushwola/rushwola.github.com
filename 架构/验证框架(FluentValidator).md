@@ -77,3 +77,11 @@ FluentValidator就是这么一个工具类库，适用于以Java语言开发的�
 5.1 maven引入依赖
 
 添加如下依赖到maven的pom.xml文件中：
+
+``` stylus
+<dependency>
+    <groupId>com.baidu.unbiz</groupId>
+    <artifactId>fluent-validator</artifactId>
+    <version>1.0.5</version>
+</dependency>
+```
