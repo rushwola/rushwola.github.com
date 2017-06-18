@@ -199,3 +199,482 @@ public class ValidatorHandler<T> implements Validator<T> {
     }
 }
 ```
+内部校验逻辑发生错误时候，有两个处理办法，
+
+第一，简单处理，直接放入错误消息。
+
+``` stylus
+context.addErrorMsg("Something is wrong about the car seat count!");
+return false;
+```
+第二，需要详细的信息，包括错误消息，错误属性/字段，错误值，错误码，都可以自己定义，放入错误的方法如下，create()方法传入消息（必填），setErrorCode()方法设置错误码（选填），setField()设置错误字段（选填），setInvalidValue()设置错误值（选填）。当然这些信息需要result(toComplex())才可以获取到，详见6.7小节。
+
+``` stylus
+context.addError(ValidationError.create("Something is wrong about the car seat count!").setErrorCode(100).setField("seatCount").setInvalidValue(t));
+return false;
+```
+6.2 ValidatorChain
+
+on()的一连串调用实际就是构建调用链，因此理所当然可以传入一个调用链
+
+``` stylus
+ValidatorChain chain = new ValidatorChain();
+List<Validator> validators = new ArrayList<Validator>();
+validators.add(new CarValidator());
+chain.setValidators(validators);
+
+Result ret = FluentValidator.checkAll().on(car, chain).doValidate().result(toSimple()
+```
+6.3 onEach
+
+如果要验证的是一个集合（Collection）或者数组，那么可以使用onEach，FluentValidator会自动为你遍历，依次apply constraints。
+
+``` stylus
+FluentValidator.checkAll()
+               .onEach(Lists.newArrayList(new Car(), new Car()), new CarValidator());
+FluentValidator.checkAll()
+               .onEach(new Car[]{}, new CarValidator());
+```
+
+6.4 fail fast or fail over
+
+当出现校验失败时，也就是Validator的validate()方法返回了false，那么是继续还是直接退出呢？默认为使用failFast()方法，直接退出，如果你想继续完成所有校验，使用failOver()来skip掉。
+
+FluentValidator.checkAll().failFast()
+               .on(car.getManufacturer(), new CarManufacturerValidator());
+FluentValidator.checkAll().failOver()
+               .on(car.getManufacturer(), new CarManufacturerValidator());
+
+6.5 when
+
+on()后面可以紧跟一个when()，当when满足expression表达式on才启用验证，否则skip调用。
+
+FluentValidator.checkAll()
+               .on(car.getManufacturer(), new CarManufacturerValidator()).when(a == b)
+
+6.6 验证回调callback
+
+doValidate()方法接受一个ValidateCallback接口，接口定义如下：
+
+public interface ValidateCallback {
+
+ /**  * 所有验证完成并且成功后  *  * @param validatorElementList 验证器list  */
+ void onSuccess(ValidatorElementList validatorElementList);
+
+ /**  * 所有验证步骤结束，发现验证存在失败后  *  * @param validatorElementList 验证器list  * @param errors 验证过程中发生的错误  */
+ void onFail(ValidatorElementList validatorElementList, List<ValidationError> errors);
+
+ /**  * 执行验证过程中发生了异常后  *  * @param validator 验证器  * @param e 异常  * @param target 正在验证的对象  *  * @throws Exception  */
+ void onUncaughtException(Validator validator, Exception e, Object target) throws Exception;
+
+}
+
+默认的，使用不含参数的doValidate()方法，FluentValidator使用DefaultValidateCallback，其实现如下，可以看出出错了，成功了什么也不做，有不可控异常的时候直接抛出。
+
+public class DefaultValidateCallback implements ValidateCallback {
+
+    @Override
+    public void onSuccess(ValidatorElementList validatorElementList) {
+    }
+
+    @Override
+    public void onFail(ValidatorElementList validatorElementList, List<ValidationError> errors) {
+    }
+
+    @Override
+    public void onUncaughtException(Validator validator, Exception e, Object target) throws Exception {
+        throw e;
+    }
+}
+
+如果你不满意这种方式，例如成功的时候打印一些消息，一种实现方式如下：
+
+Result ret = FluentValidator.checkAll()
+                            .on(car.getSeatCount(), new CarSeatCountValidator())
+                            .doValidate(new DefaulValidateCallback() {
+
+                                @Override
+                                public void onSuccess(ValidatorElementList validatorElementList) {
+                                    LOG.info("all ok!");
+                                }
+                            }).result(toSimple());
+
+6.7 获取结果
+
+result()接受一个ResultCollector接口，如上面所示，toSimple()实际是个静态方法，这种方式在Java8 Stream API中很常见，默认可以使用FluentValidator自带的简单结果Result，如果需要可以使用复杂ComplexResult，内含错误消息，错误属性/字段，错误值，错误码，如下所示：
+
+ComplexResult ret = FluentValidator.checkAll().failOver()
+                                   .on(company, new CompanyCustomValidator())
+                                   .doValidate().result(toComplex());
+
+当然，如果你想自己实现一个结果类型，完全可以定制，实现ResultCollector接口即可。
+
+public interface ResultCollector<T> {
+
+ /**  * 转换为对外结果  *  * @param result 框架内部验证结果  *  * @return 对外验证结果对象  */
+ T toResult(ValidationResult result);
+}
+
+6.8 关于RuntimeValidateException
+
+如果验证中发生了一些不可控异常，例如数据库调用失败，RPC连接失效等，会抛出一些异常，如果Validator没有try-catch处理，FluentValidator会将这些异常封装在RuntimeValidateException，然后再re-throw出去，这个情况你应该知晓并作出你认为最正确的处理。
+6.9 context上下文共享
+
+通过putAttribute2Context()方法，可以往FluentValidator注入一些键值对，在所有Validator中共享，有时候这相当有用。
+
+例如下面展示了在caller添加一个ignoreManufacturer属性，然后再Validator中拿到这个值的过程。
+
+FluentValidator.checkAll()
+               .putAttribute2Context("ignoreManufacturer", true)
+               .on(car.getManufacturer(), new CarManufacturerValidator())
+               .doValidate().result(toSimple());
+
+public class CarManufacturerValidator extends ValidatorHandler<String> implements Validator<String> {
+
+    @Override
+    public boolean validate(ValidatorContext context, String t) {
+        Boolean ignoreManufacturer = context.getAttribute("ignoreManufacturer", Boolean.class);
+        if (ignoreManufacturer != null && ignoreManufacturer) {
+            return true;
+        }
+        // ...
+    }
+
+}
+
+6.10 闭包
+
+通过putClosure2Context()方法，可以往FluentValidator注入一个闭包，这个闭包的作用是在Validator内部可以调用，并且缓存结果到Closure中，这样caller在上层可以获取这个结果。
+
+典型的应用场景是，当需要频繁调用一个RPC的时候，往往该执行线程内部一次调用就够了，多次调用会影响性能，我们就可以缓存住这个结果，在所有Validator间和caller中共享。
+
+下面展示了在caller处存在一个manufacturerService，它假如需要RPC才能获取所有生产商，显然是很耗时的，可以在validator中调用，然后validator内部共享的同时，caller可以利用闭包拿到结果，用于后续的业务逻辑。
+
+Closure<List<String>> closure = new ClosureHandler<List<String>>() {
+
+    private List<String> allManufacturers;
+
+    @Override
+    public List<String> getResult() {
+        return allManufacturers;
+    }
+
+    @Override
+    public void doExecute(Object... input) {
+        allManufacturers = manufacturerService.getAllManufacturers();
+    }
+};
+
+Result ret = FluentValidator.checkAll()
+                            .putClosure2Context("manufacturerClosure", closure)
+                            .on(car, validator)
+                            .doValidate().result(toSimple());
+
+
+public class CarValidator extends ValidatorHandler<Car> implements Validator<Car> {
+
+    @Override
+    public boolean validate(ValidatorContext context, Car car) {
+        Closure<List<String>> closure = context.getClosure("manufacturerClosure");
+        List<String> manufacturers = closure.executeAndGetResult();
+
+        if (!manufacturers.contains(car.getManufacturer())) {
+            context.addErrorMsg(String.format(CarError.MANUFACTURER_ERROR.msg(), car.getManufacturer()));
+            return false;
+        }
+
+        return true;
+    }
+}
+
+7 高级玩法
+7.1 与JSR303规范最佳实现Hibernate Validator集成
+
+Hibernate Validator是JSR 303 – Bean Validation规范的一个最佳的实现类库，他仅仅是jboss家族的一员，和大名鼎鼎的Hibernate ORM是系出同门，属于远房亲戚关系。很多框架都会天然集成这个优秀类库，例如Spring MVC的@Valid注解可以为Controller方法上的参数做校验。
+
+FluentValidator当然不会重复早轮子，这么好的类库，一定要使用站在巨人肩膀上的策略，将它集成进来。
+
+想要了解更多Hibernate Validator用法，参考这个链接。
+
+下面的例子展示了@NotEmpty, @Pattern, @NotNull, @Size, @Length和@Valid这些注解装饰一个公司类（Company）以及其成员变量（Department）。
+
+public class Company {
+    @NotEmpty
+    @Pattern(regexp = "[0-9a-zA-Z4e00-u9fa5]+")
+    private String name;
+
+    @NotNull(message = "The establishTime must not be null")
+    private Date establishTime;
+
+    @NotNull
+    @Size(min = 0, max = 10)
+    @Valid
+    private List<Department> departmentList;
+
+    // getter and setter...
+}
+
+public class Department {
+    @NotNull
+    private Integer id;
+
+    @Length(max = 30)
+    private String name;
+
+    // getter and setter...
+}
+
+我们要在这个Company类上做校验，首先引入如下的jar包到pom.xml中。
+
+<dependency>
+    <groupId>com.baidu.unbiz</groupId>
+    <artifactId>fluent-validator-jsr303</artifactId>
+    <version>1.0.5</version>
+</dependency>
+
+默认依赖于Hibernate Validator 5.2.1.Final版本。
+
+然后我们使用HibernateSupportedValidator这个验证器来在company上做校验，它和普通的Validator没任何区别。
+
+Result ret = FluentValidator.checkAll()
+                            .on(company, new HibernateSupportedValidator<Company>().setValidator(validator))
+                            .on(company, new CompanyCustomValidator())
+                            .doValidate().result(toSimple());
+System.out.println(ret);
+
+注意这里的HibernateSupportedValidator依赖于javax.validation.Validator的实现，也就是Hibernate Validator，否则它将不会正常工作。
+
+下面是Hibernate Validator官方提供的初始化javax.validation.Validator实现的方法，供参考使用。
+
+Locale.setDefault(Locale.ENGLISH); // speicify language
+ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+javax.validation.Validator validator = factory.getValidator();
+
+7.2 注解验证
+
+一直以来介绍的方式都是通过显示的API调用来进行验证，FluentValidator同样提供简洁的基于注解配置的方式来达到同样的效果。
+
+@FluentValidate可以装饰在属性上，内部接收一个Class[]数组参数，这些个classes必须是Validator的子类，这叫表明在某个属性上依次用这些Validator做验证。举例如下，我们改造下Car这个类：
+
+public class Car {
+
+    @FluentValidate({CarManufacturerValidator.class})
+    private String manufacturer;
+
+    @FluentValidate({CarLicensePlateValidator.class})
+    private String licensePlate;
+
+    @FluentValidate({CarSeatCountValidator.class})
+    private int seatCount;
+
+    // getter and setter ... 
+}
+
+然后还是利用on()或者onEach()方法来校验，这里只不过不用传入Validator或者ValidatorChain了。
+
+Car car = getCar();
+
+Result ret = FluentValidator.checkAll().configure(new SimpleRegistry())
+                            .on(car)
+                            .doValidate()
+                            .result(toSimple());
+
+那么问题来了？不要问我挖掘机（Validator）哪家强，先来说挖掘（Validator）从哪来。
+
+默认的，FluentValidator使用SimpleRegistry，它会尝试从当前的class loader中调用Class.newInstance()方法来新建一个Validator，具体使用示例如下，默认的你不需要使用configure(new SimpleRegistry())。
+
+一般情况下，SimpleRegistry都够用了。除非你的验证器需要Spring IoC容器管理的bean注入，那么你干脆可以把Validator也用Spring托管，使用@Service或者@Component注解在Validator类上就可以做到，如下所示：
+
+@Component
+public class CarSeatCountValidator extends ValidatorHandler<Integer> implements Validator<Integer> {
+    // ...
+}
+
+这时候，需要使用SpringApplicationContextRegistry，它的作用就是去Spring的容器中寻找Validator。想要使用Spring增强功能，将下面的maven依赖加入到pom.xml中。
+
+<dependency>
+    <groupId>com.baidu.unbiz</groupId>
+    <artifactId>fluent-validator-spring</artifactId>
+    <version>1.0.5</version>
+</dependency>
+
+依赖树如下，请自觉排除或者更换不想要的版本。
+
+[INFO] +- org.springframework:spring-context-support:jar:4.1.6.RELEASE:compile
+[INFO] | +- org.springframework:spring-beans:jar:4.1.6.RELEASE:compile
+[INFO] | +- org.springframework:spring-context:jar:4.1.6.RELEASE:compile
+[INFO] | | +- org.springframework:spring-aop:jar:4.1.6.RELEASE:compile
+[INFO] | | | - aopalliance:aopalliance:jar:1.0:compile
+[INFO] | | - org.springframework:spring-expression:jar:4.1.6.RELEASE:compile
+[INFO] | - org.springframework:spring-core:jar:4.1.6.RELEASE:compile
+[INFO] +- org.slf4j:slf4j-api:jar:1.7.7:compile
+[INFO] +- org.slf4j:slf4j-log4j12:jar:1.7.7:compile
+[INFO] | - log4j:log4j:jar:1.2.17:compile
+
+让Spring容器去管理SpringApplicationContextRegistry，由于这个类需要实现ApplicationContextAware接口，所以Spring会帮助我们把context注入到里面，我们也就可以随意找bean了。
+
+调用的例子省略，原来怎么校验现在还怎么来。
+7.3 分组
+
+当使用注解验证时候，会遇到这样的情况，某些时候例如添加操作，我们会验证A/B/C三个属性，而修改操作，我们需要验证B/C/D/E 4个属性，显示调用FluentValidator API的情况下，我们可以做到“想验证什么，就验证什么”。
+
+@FluentValidate注解另外一个接受的参数是groups，里面也是Class[]数组，只不过这个Class可以是开发人员随意写的一个简单的类，不含有任何属性方法都可以，例如：
+
+public class Add {
+}
+
+public class Car {
+
+    @FluentValidate(value = {CarManufacturerValidator.class}, groups = {Add.class})
+    private String manufacturer;
+
+}
+
+那么验证的时候，只需要在checkAll()方法中传入想要验证的group，就只会做选择性的分组验证，例如下面例子，只有生产商会被验证。
+
+Result ret = FluentValidator.checkAll(new Class<?>[] {Add.class})
+                            .on(car)
+                            .doValidate()
+                            .result(toSimple());
+
+这种groups的方法同样适用于hibernate validator，想了解更多请参考官方文档。
+7.4 级联对象图
+
+级联验证（cascade validation），也叫做对象图（object graphs），指一个类嵌套另外一个类的时候做的验证。
+
+如下例所示，我们在车库（Garage）类中含有一个汽车列表（carList），可以在这个汽车列表属性上使用@FluentValid注解，表示需要级联到内部Car做onEach验证。
+
+public class Garage {
+
+    @FluentValidate({CarNotExceedLimitValidator.class})
+    @FluentValid
+    private List<Car> carList;
+}
+
+注意，@FluentValid和@FluentValidate两个注解不互相冲突，如下所示，调用链会先验证carList上的CarNotExceedLimitValidator，然后再遍历carList，对每个car做内部的生产商、座椅数、牌照验证。
+7.5 Spring AOP集成
+
+读到这里，你会发现，只介绍了优雅，说好的业务逻辑和验证逻辑解耦合呢？这需要借助Spring AOP技术实现，如下示例，addCar()方法内部上来就是真正的核心业务逻辑，注意参数上的car前面装饰有@FluentValid注解，这表示需要Spring利用切面拦截方法，对参数利用FluentValidator做校验。
+
+@Service
+public class CarServiceImpl implements CarService {
+
+    @Override
+    public Car addCar(@FluentValid Car car) {
+        System.out.println("Come on! " + car);
+        return car;
+    }
+}
+
+Spring XML配置如下，首先定义了ValidateCallback表示该如何处理成功，失败，抛出不可控异常三种情况，因此，即使你拿不到Result结果，也可以做自己的操作，例如下面例子，如果发生错误，抛出CarException，并且消息是第一条错误信息，如果成功则打印"Everything works fine"，如果失败，把实际的异常e放入运行时的CarException抛出。
+
+public class ValidateCarCallback extends DefaulValidateCallback implements ValidateCallback {
+
+    @Override
+    public void onFail(ValidatorElementList validatorElementList, List<ValidationError> errors) {
+        throw new CarException(errors.get(0).getErrorMsg());
+    }
+
+    @Override
+    public void onSuccess(ValidatorElementList validatorElementList) {
+        System.out.println("Everything works fine!");
+    }
+
+    @Override
+    public void onUncaughtException(Validator validator, Exception e, Object target) throws Exception {
+        throw new CarException(e);
+    }
+}
+
+将ValidateCarCallback注入到FluentValidateInterceptor中。然后利用BeanNameAutoProxyCreator在*ServiceImpl上用fluentValidateInterceptor拦截做验证，这有点类似Spring事务处理拦截器的使用方式。更多AOP的用法请参考Spring官方文档。
+
+<bean id="validateCarCallback" class="com.baidu.unbiz.fluentvalidator.interceptor.ValidateCarCallback"/>
+
+<bean id="fluentValidateInterceptor"
+ class="com.baidu.unbiz.fluentvalidator.interceptor.FluentValidateInterceptor">
+    <property name="callback" ref="validateCarCallback"/>
+    <property name="locale" value="zh_CN"/>
+    <property name="hibernateDefaultErrorCode" value="10000"/>
+</bean>
+
+<bean class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+    <property name="beanNames">
+        <list>
+            <value>*ServiceImpl</value>
+        </list>
+    </property>
+    <property name="interceptorNames">
+        <list>
+            <value>fluentValidateInterceptor</value>
+        </list>
+    </property>
+</bean>
+
+测试代码如下：
+
+@Test
+public void testAddCarNegative() {
+    try {
+        Car car = getValidCar();
+        car.setLicensePlate("BEIJING123");
+        carService.addCar(car);
+    } catch (CarException e) {
+        assertThat(e.getMessage(), Matchers.is("License is not valid, invalid value=BEIJING123"));
+        return;
+    }
+    fail();
+}
+
+7.6 国际化支持
+
+也就是常说的i18n，使用Spring提供的MessageSource来支持，只需要再Spring的XML配置中加入如下配置：
+
+<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+    <property name="basenames">
+    <list>
+        <value>error-message</value>
+    </list>
+    </property>
+</bean>
+
+同时编辑两个国际化文件，路径放在classpath中即可，通常放到resource下面，文件名分别叫做error-message.properties和error-message_zh_CN.properties表示默认（英文）和中文-简体中文消息。
+
+car.size.exceed=Car number exceeds limit, max available num is {0}
+
+car.size.exceed=u6c7du8f66u6570u91cfu8d85u8fc7u9650u5236uff0cu6700u591au5141u8bb8{0}u4e2a
+
+注意，其中{0}代表和运行时填充的参数。
+
+在Validator使用时，示例如下，只用MessageSupport.getText(..)来获取国际化信息。
+
+public class GarageCarNotExceedLimitValidator extends ValidatorHandler&lt;Garage&gt; implements Validator&lt;Garage&gt; {
+
+ public static final int MAX_CAR_NUM = 50;
+
+ @Override
+ public boolean validate(ValidatorContext context, Garage t) {
+    if (!CollectionUtil.isEmpty(t.getCarList())) {
+        if (t.getCarList().size() &gt; MAX_CAR_NUM) {
+            context.addError(
+ ValidationError.create(MessageSupport.getText(GarageError.CAR_NUM_EXCEED_LIMIT.msg(),
+            MAX_CAR_NUM))
+           .setErrorCode(GarageError.CAR_NUM_EXCEED_LIMIT.code())
+           .setField(&quot;garage.cars&quot;)
+           .setInvalidValue(t.getCarList().size()));
+        return false;
+        }
+    }
+    return true;
+ }
+
+}
+
+这里需要注意下，如果使用HibernateValidator打的注解，例如@NotNull，@Length等，需要将错误信息放到ValidationMessages.properties和ValidationMessages_zh_CN.properties中，否则找不到哦。
+
+8 总结
+
+上面对FluentValidator做了一个全面的介绍，从显示的流式风格（Fluent Interface）API调用，以及各种丰富多样的链操作方法，再到对JSR303 – Bean Validation规范的集成，最后介绍了高级点的注解方式验证、支持级联对象图和Spring AOP的集成，我想这完成了对FluentValidator任务的诠释，更好的帮助开发人员做业务逻辑验证，希望能给你的项目一点帮助，哪怕不是用这个框架，而只是汲取一些思想，然后产生自己的思考，让我们的clean code更加“环保”。
+
+如果有任何疑问，欢迎致电骚扰这个对代码有终身质保承诺的我。
+
+更多实例，请参考github。
