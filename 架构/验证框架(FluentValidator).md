@@ -115,3 +115,6 @@ public class Car {
 }
 ```
 
+5.3 开发一个专职的Validator
+
+实际这里需要开发三个Validator，分别对Car的3个属性进行校验，这里以座椅数为例展示如何开发一个Validator，其他两个省略。
