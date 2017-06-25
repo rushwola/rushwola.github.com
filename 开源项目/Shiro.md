@@ -4,6 +4,7 @@ tags: 新建,模板,小书匠
 grammar_cjkRuby: true
 ---
 Shiro 网上地址:http://jinnianshilongnian.iteye.com/blog/2018936/
+                        http://jinnianshilongnian.iteye.com/category/305053
 1.1  简介
 
 Apache Shiro是Java的一个安全框架。目前，使用Apache Shiro的人越来越多，因为它相当简单，对比Spring Security，可能没有Spring Security做的功能强大，但是在实际工作时可能并不需要那么复杂的东西，所以使用小而简单的Shiro就足够了。对于它俩到底哪个好，这个不必纠结，能更简单的解决项目问题就好了。
@@ -39,7 +40,3 @@ Testing：提供测试支持；
 Run As：允许一个用户假装为另一个用户（如果他们允许）的身份进行访问；
 
 Remember Me：记住我，这个是非常常见的功能，即一次登录后，下次再来的话不用登录了。
-
-记住一点，Shiro不会去维护用户、维护权限；这些需要我们自己去设计/提供；然后通过相应的接口注入给Shiro即可。
- 
-接下来我们分别从外部和内部来看看Shiro的架构，对于一个好的框架，从外部来看应该具有非常简单易于使用的API，且API契约明确；从内部来看的话，其应该有一个可扩展的架构，即非常容易插入用户自定义实现，因为任何框架都不能满足所有需求。
