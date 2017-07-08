@@ -15,3 +15,16 @@ http://www.myexception.cn/h/1365771.html
 jasig  cashttps
 源码:
 https://github.com/apereo/cas
+
+将源码转化为eclipse工具,需要jdk1.8的支持.
+并将以下代码注释掉:
+/*
+    def currentTime = java.time.ZonedDateTime.now()
+    compileJava.doLast {
+        buildDate = currentTime
+        jar.manifest {
+            attributes("Implementation-Date": project.buildDate)
+        }
+    }
+	*/
+http://blog.csdn.net/zhaoxusheng/article/details/70148806
