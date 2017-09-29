@@ -3,7 +3,7 @@ title: eclipse开发工具
 tags: 新建,模板,小书匠
 grammar_cjkRuby: true
 ---
-# maven 下载jar包不全的问题 
+# maven 下载jar包不全的问题
 Eclipse中maven从远程仓库中下载jar包有时会很慢，有些甚至进度停止不动，这个时候我们可能会终止当前下载，但是终止jar包下载后会出现一个问题，再次打开Eclipse时，你会发现提示你项目中依赖的jar包找不到
 
 此时我们可以通过如下方案解决
@@ -15,6 +15,14 @@ Eclipse中maven从远程仓库中下载jar包有时会很慢，有些甚至进�
 
 
 
- 
+
 
 3.Maven 更新当前项目，maven就会继续下载缺失的依赖jar包，直至缺失jar包下载完成，上述问题就解决了。
+
+
+
+#  eclipse 属性文件读写插件安装
+
+Eclipse插件安装地址：http://propedit.sourceforge.jp/eclipse/updates/
+
+eclipse 插件大全：http://www.jb51.net/article/34136.htm
