@@ -114,3 +114,4 @@ Elasticsearch之所以能动态resharding，主要在于它最开始就预先分
 https://es.xiaoleilu.com/
 https://www.zhihu.com/question/55686136
 http://www.cnblogs.com/huangfox/p/3541300.html
+http://blog.csdn.net/laoyang360/article/details/52244917
