@@ -7,7 +7,7 @@ grammar_cjkRuby: true
 
 Nginx可以配置代理多台服务器，当一台服务器宕机之后，仍能保持系统可用。具体配置过程如下：
 
-
+http://www.cnblogs.com/hjwublog/p/5114380.html
 1. 在http节点下，添加upstream节点。
 
 upstream linuxidc {

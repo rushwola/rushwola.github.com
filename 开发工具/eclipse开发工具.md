@@ -24,6 +24,12 @@ Eclipse中maven从远程仓库中下载jar包有时会很慢，有些甚至进�
 Papyrus
 网上资料：http://blog.csdn.net/taiyangdao/article/details/52675725
 
+uml2tool
+http://www.xuebuyuan.com/2219070.html
+
+http://blog.csdn.net/bamboolsu/article/details/43268097
+
+modelgoon
 #  eclipse 属性文件读写插件安装
 
 Eclipse插件安装地址：http://propedit.sourceforge.jp/eclipse/updates/
