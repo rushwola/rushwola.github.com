@@ -11,14 +11,35 @@ sudo useradd elsearch
 目录文件授权：
 chown -R elsearch:elsearch /usr/local/elasticsearch-2.4.1
 
+遇到的问题：
+http://blog.csdn.net/kk185800961/article/details/54175291
+
+如果是centos 6的话要在es配置文件里加上
+bootstrap.memory_lock: false
+bootstrap.system_call_filter: false
+
+配置文件注意事项：
+配置项左靠齐且冒号后要有空格。
+查关配置说明见：http://rockelixir.iteye.com/blog/1883373
+
 启动:
 su elsearch
 ./bin/elasticsearch
 后台启动加上 -d 参数即可。
 
+如果想直接以root启动
+
+```
+
+bin/elasticsearch -Des.insecure.allow.root=true
+
+```
+
 # 验证
 
 验证 本机通过 curl localhost:9200 来验证
+
+lsof -i:9200
 
 ```
 [root@admin ~]# curl localhost:9200  
@@ -73,6 +94,10 @@ network.host: 0.0.0.0
 
 3.重启命令 sh elasticsearch -d
 
+#安装head插件
+
+
+
 # 概念名词
 
 Elasticsearch底层是基于Lucene的，Lucene是一款优秀的搜索lib。
@@ -107,7 +132,9 @@ Elasticsearch之所以能动态resharding，主要在于它最开始就预先分
 因为任意一个index都可配置多个replica，通过冗余备份的方式保证了数据的安全性，同时replica也能分担读压力，类似于MySQL中的slave。
 
 
+#　java api  
 
+https://www.elastic.co/guide/en/elasticsearch/client/java-api/5.4/index.html
 
 # 参考资料
 
