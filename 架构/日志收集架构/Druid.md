@@ -29,3 +29,60 @@ Druid.io（以下简称Druid）是面向海量数据的、用于实时查询与�
 数据可视化问题。HDFS是一个优秀的分布式文件系统，但是对于数据分析以及数据的即席查询，HDFS并不是最优的选择。
 
 传统的大数据处理架构Hadoop更倾向于一种“后台批处理的数据仓库系统”，其作为海量历史数据保存、冷数据分析，确实是一个优秀的通用解决方案，但是如何保证高并发环境下海量数据的查询分析性能，以及如何实现海量实时数据的查询分析与可视化，Hadoop确实显得有些无能为力。
+
+# 安装
+https://imply.io/
+到官网下载安装包。
+
+```
+imply-2.3.9.tar
+
+```
+
+```
+tar -xzf imply-2.3.9.tar.gz
+cd imply-2.3.9
+
+```
+
+在这个包中，你会发现：
+bin/* - 为包含的软件运行脚本。
+conf/* - 群集设置的模板配置。
+conf-quickstart/* - 这个快速入门的配置。
+dist/* - 所有包括的软件。
+quickstart/* - 这个快速入门有用的文件。
+
+# 启动服务
+
+```
+bin/supervise -c conf/supervise/quickstart.conf
+
+```
+
+发现报错:
+```
+Please install nodejs version 4.5.0 or better!
+
+```
+
+所以要安装node 4.5.0或以上版本
+
+安装nodejs
+
+```
+wget https://nodejs.org/dist/v8.9.3/node-v8.9.3-linux-x64.tar.xz
+tar -xvf node-v8.9.3-linux-x64.tar.xz
+
+vi /etc/profile
+
+在最后一行添加（设置环境变量）
+export NODE_HOME=/mnt/software/node-v4.5.0-linux-x64
+export PATH=$PATH:$NODE_HOME/bin
+export NODE_PATH=$NODE_HOME/lib/node_modules
+
+
+source /etc/profile
+```
+
+
+grep "8081"  ./bin/

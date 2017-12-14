@@ -16,8 +16,11 @@ PyCharm
 https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000
 
 
+# python人工智能
 
-numpy, pandas, scipy, sklearn, tensorflow
+numpy, pandas,
+scipy, sklearn,
+tensorflow
 
 最后一个是核武器
 tensorflow
