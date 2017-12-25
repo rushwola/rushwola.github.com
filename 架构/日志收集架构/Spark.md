@@ -6,6 +6,9 @@ Spark快速大数据分析
 
  https://www.cnblogs.com/donaldlee2008/p/5836146.html
 
+ 源码：
+ https://github.com/apache/spark
+
 # spark 单机部署
 
 １、安装scala

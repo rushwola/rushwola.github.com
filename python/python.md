@@ -5,6 +5,8 @@
 
 到官网下载安装程序:https://www.python.org/downloads/
 
+https://www.cnblogs.com/feng18/p/5854912.html
+
 # IDE
 
 PyCharm

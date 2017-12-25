@@ -1,9 +1,14 @@
-#官方文档
+#网上资料
+官方文档
 https://docs.imply.io/on-premise/quickstart
 
 http://lxw1234.com/archives/2015/11/554.htm 海量数据实时OLAP分析系统-Druid.io安装配置和体验
 http://druid.io/docs/0.9.2/design/design.html Druid官网搭建
 http://blog.csdn.net/u010003835/article/details/52947743
+
+网上资料:
+https://fangyeqing.github.io/categories/druid-io/page/2/
+http://www.jianshu.com/p/973f5041577f
 # 概述
 Druid.io（以下简称Druid）是面向海量数据的、用于实时查询与分析的OLAP存储系统。Druid的四大关键特性总结如下：
 
@@ -57,6 +62,8 @@ quickstart/* - 这个快速入门有用的文件。
 ```
 bin/supervise -c conf/supervise/quickstart.conf
 
+nohup bin/supervise -c conf/supervise/quickstart.conf &
+
 ```
 
 发现报错:
@@ -83,6 +90,44 @@ export NODE_PATH=$NODE_HOME/lib/node_modules
 
 source /etc/profile
 ```
+
+# 停止服务
+
+```
+bin/service --down
+
+```
+
+
+#重新启动Tranquility Server
+```
+bin/service --restart tranquility-server
+
+#启动tranquility http实时数据
+bin/tranquility server -configFile conf-quickstart/tranquility/server01.json
+
+```
+
+
+导入数据模式
+```
+bin/post-index-task --file quickstart/wikiticker-index.json
+
+```
+
+
+#摄取数据
+
+摄取规范由3个部分组成
+```
+{
+  "dataSchema" : {...},
+  "ioConfig" : {...},
+  "tuningConfig" : {...}
+}
+
+```
+
 
 
 grep "8081"  ./bin/
