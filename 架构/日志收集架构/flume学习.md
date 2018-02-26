@@ -7,7 +7,7 @@
 非后台启动：
 
 ```
-./bin/flume-ng agent  -c ./conf  -f ./conf/flume-conf.properties -n
+./bin/flume-ng agent  -c ./conf  -f ./conf/flume-conf.properties -Dflume.root.logger=DEBUG,console -n
  agent
 
 ```

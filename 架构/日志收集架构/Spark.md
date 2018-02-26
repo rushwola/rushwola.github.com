@@ -95,7 +95,7 @@ tar zxf spark-1.6.1-bin-hadoop2.6.tgz
 
 集群安装条件是要：安装了java、安装了scala。
 
-本次安富有版本：
+本次安装有版本：
 jdk :1.8
 scala-2.12.4
 spark-1.6.3-bin-hadoop2.6
@@ -224,3 +224,10 @@ http://www.scala-lang.org/files/archive/scala-2.9.3.msi
 http://social.msdn.microsoft.com/Forums/windowsazure/en-US/28a57efb-082b-424b-8d9e-731b1fe135de/please-read-if-experiencing-job-failures?forum=hdinsight
 2) 将此文件放置在某个目录下，比如C:\winutils\bin\中。
 3）在程序的一开始声明：System.setProperty("hadoop.home.dir", "c:\\winutil\\")
+
+
+# Spark sql jdbc
+
+http://spark.apache.org/docs/1.6.1/sql-programming-guide.html
+http://spark.apache.org/docs/1.6.0/sql-programming-guide.html
+http://spark.apache.org/docs/latest/sql-programming-guide.html#sql
