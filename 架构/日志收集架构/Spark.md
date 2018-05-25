@@ -231,3 +231,8 @@ http://social.msdn.microsoft.com/Forums/windowsazure/en-US/28a57efb-082b-424b-8d
 http://spark.apache.org/docs/1.6.1/sql-programming-guide.html
 http://spark.apache.org/docs/1.6.0/sql-programming-guide.html
 http://spark.apache.org/docs/latest/sql-programming-guide.html#sql
+
+
+# spark-submit
+
+参数说明
