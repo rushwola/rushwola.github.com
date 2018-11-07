@@ -287,5 +287,4 @@ public void start() {
            throw new IllegalStateException( getClass().getName() + " can only be started once." );
        new Thread( this ).start();;
    }
-
 ```

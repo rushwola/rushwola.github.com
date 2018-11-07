@@ -1,0 +1,20 @@
+源码安装python3.6.2 
+执行以下命令:
+wget https://www.python.org/ftp/python/3.6.2/Python-3.6.2.tgz
+yum install openssl-devel bzip2-devel expat-devel gdbm-devel readline-devel sqlite-devel //安装可能的依赖库
+
+tar -zxvf Python-3.6.2.tgz
+cd Python-3.6.2/
+./configure --prefix=/usr/local/python/ //安装到/usr/local目录
+make
+make altinstall //此处不能用install安装，因为install不区分版本，会出现多版本混乱的问题
+
+路径：
+python3.6程序的执行文件：/usr/local/python/bin/python3.6
+python3.6应用程序目录：/usr/local/python/lib/python3.6
+pip3的执行文件：/usr/local/python/bin/pip3.6
+pyenv3的执行文件：/usr/local/python/bin/pyenv-3.6
+更改python默认链接
+# cd/usr/bin
+# mv  python python.backup
+# ln -s /usr/local/python/bin/python3.6 /usr/bin/python

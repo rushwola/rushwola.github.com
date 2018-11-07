@@ -1,5 +1,7 @@
 # 书籍
 
+
+
 Spark快速大数据分析
  图解Spark：核心技术与案例实战
  Hadoop + Spark 大数据巨量分析与机器学习整合开发实战
@@ -8,6 +10,9 @@ Spark快速大数据分析
 
  源码：
  https://github.com/apache/spark
+
+ Spark最佳实践－腾讯专家传授实战经验
+ 链接：http://pan.baidu.com/s/1jIolOvs 密码：oxhx
 
 # spark 单机部署
 

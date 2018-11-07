@@ -1,5 +1,8 @@
 ## Welcome to GitHub Pages
 
+本软件的下载地址:
+ https://cnpmjs.org/mirrors/atom/1.9.9/
+
 You can use the [editor on GitHub](https://github.com/rushwola/rushwola.github.com/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
 
 Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.

@@ -16,7 +16,7 @@
 后台启动：
 
 ```
-nohup bin/flume-ng agent --conf ./conf/ -f conf/flume-conf.properties -Dflume.root.logger=DEBUG,console -n agent &
+nohup bin/flume-ng agent --conf ./conf/ -f conf/flume-conf.properties -Dflume.root.logger=DEBUG,console -n agent >>333.out &
 
 ```
 
