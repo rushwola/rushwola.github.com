@@ -230,6 +230,9 @@ public static boolean access(String path, AccessRight desiredAccess)
 
 最后发现没有日志输出，如果想要日志输出，需要自己添加log4j.properties文件。
 
+
+ 注意在开发hadoop的时侯我们可以通过配置HADOOP_USER_NAME环境变量来指定访问hdfs文件的用户.
+
 #　idea 安装scala 插件
 
 首先找到软件里面匹配的Scala版本
