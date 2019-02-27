@@ -249,3 +249,6 @@ https://plugins.jetbrains.com/plugin/631-python
  直接可用，如下图File——settings——plugins点击“Install plugin from disk”
 
  ![](assets/markdown-img-paste-20181113190022286.png)
+
+
+ https://blog.csdn.net/gx304419380/article/details/80245976
