@@ -11,7 +11,7 @@ BJ-HOST-138:12181,
 m7-qding-bd-244:12181
 
 ## hdfs
-datanode 16个,每个节点14T。
+datanode 16个,每个节点14T。每个节点内存48G,cpu 24核。
 双namenode，
 
 ##yarn
